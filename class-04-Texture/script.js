@@ -2,59 +2,82 @@ import * as THREE from "three"
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import GUI from "lil-gui"
 
-const dimension={
-    height:window.innerHeight,
-    width:window.innerWidth
+const dimension = {
+    height: window.innerHeight,
+    width: window.innerWidth
 }
-let canvas=document.querySelector("#webgl")
+let canvas = document.querySelector("#webgl")
 
-const renderer=new THREE.WebGLRenderer({
+const renderer = new THREE.WebGLRenderer({
     canvas
 })
 
-const scene=new THREE.Scene()
+const scene = new THREE.Scene()
 
-const camera= new THREE.PerspectiveCamera(75,dimension.width/dimension.height,0.1,100)
-camera.position.z=5
+const camera = new THREE.PerspectiveCamera(75, dimension.width / dimension.height, 0.1, 100)
+camera.position.z = 5
 
 
 
 ///////Texture Loader
-let textureLoader=new THREE.TextureLoader()
-const texture=textureLoader.load("https://tse2.mm.bing.net/th/id/OIP.fAR_8u_abqI5eLbpvMCHuwHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3")
+let textureLoader = new THREE.TextureLoader()
+const texture = textureLoader.load("https://tse2.mm.bing.net/th/id/OIP.fAR_8u_abqI5eLbpvMCHuwHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3")
 
 
 
 
-const geometry=new THREE.BoxGeometry(1,1,1)
-const material=new THREE.MeshStandardMaterial({
-    map:texture
+const geometry = new THREE.BoxGeometry(1, 1, 1)
+const material = new THREE.MeshStandardMaterial({
+    map: texture
 })
 const ambLight = new THREE.AmbientLight("white");
 
-const pntLight=new THREE.PointLight("white",300)
+const pntLight = new THREE.PointLight("white", 300)
 pntLight.position.set(8, 8, 8);
 scene.add(ambLight);
 scene.add(pntLight)
 
-const cube=new THREE.Mesh(geometry,material)
+const cube = new THREE.Mesh(geometry, material)
 
 
 scene.add(cube)
 
 
 ///////////LIL GUI
-const gui=new GUI()
-const positionFolder=gui.addFolder("Position")
-positionFolder.add(cube.position,"x",-4,4).name("x-move")
+const gui = new GUI()
+const positionFolder = gui.addFolder("Position")
+positionFolder.add(cube.position, "x", -4, 4).name("x-move")
 
 
-renderer.setSize(dimension.width,dimension.height)
+renderer.setSize(dimension.width, dimension.height)
 
-renderer.setPixelRatio(Math.min(2,window.devicePixelRatio))
+renderer.setPixelRatio(Math.min(2, window.devicePixelRatio))
 
 
-const orbitControl=new OrbitControls(camera,renderer.domElement)
+const orbitControl = new OrbitControls(camera, renderer.domElement)
+
+// /////////small mesh
+
+for (let i = 1; i <= 100; i++) {
+    const geometry = new THREE.BoxGeometry(1, 1, 1)
+    const material = new THREE.MeshStandardMaterial({
+        map: texture
+    })
+    const cube = new THREE.Mesh(geometry, material)
+
+    const x = 10 * (Math.random() * 2 - 1)
+    const y = 5 * (Math.random() * 2 - 1)
+    const z = 3 * (Math.random() * 2 - 1)
+
+    const xRot = Math.PI * (Math.random() * 2 - 1)
+    const yRot = Math.PI * (Math.random() * 2 - 1)
+    const zRot = Math.PI * (Math.random() * 2 - 1)
+
+    cube.position.set(x, y, z)
+    cube.rotation.set(xRot, yRot, zRot)
+    scene.add(cube)
+}
+
 
 
 window.addEventListener("resize", () => {
