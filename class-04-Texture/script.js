@@ -46,8 +46,6 @@ scene.add(pntLight)
 ///////////LIL GUI
 const gui = new GUI()
 const positionFolder = gui.addFolder("Position")
-positionFolder.add(cube.position, "x", -4, 4).name("x-move")
-
 
 renderer.setSize(dimension.width, dimension.height)
 
@@ -63,8 +61,9 @@ const material = new THREE.MeshStandardMaterial({
     map: texture
 })
 const cube = new THREE.Mesh(geometry, material)
+positionFolder.add(cube.position, "x", -4, 4).name("x-move")
 
-const count = 200
+const count = 100
 
 const instance = new THREE.InstancedMesh(geometry, material, count)
 
@@ -87,7 +86,7 @@ for (let i = 1; i <= count; i++) {
 
     dummy.updateMatrix()
 
-    instance.updateMatrix()
+    instance.setMatrixAt(i, dummy.matrix)
 }
 
 
