@@ -63,31 +63,31 @@ const material = new THREE.MeshStandardMaterial({
 const cube = new THREE.Mesh(geometry, material)
 positionFolder.add(cube.position, "x", -4, 4).name("x-move")
 
-const count = 100
+// const count = 100
 
-const instance = new THREE.InstancedMesh(geometry, material, count)
+// const instance = new THREE.InstancedMesh(geometry, material, count)
 
-scene.add(instance)
+// scene.add(instance)
 
-const dummy = new THREE.Object3D()
+// const dummy = new THREE.Object3D()
 
-// scene.add(cube)
+// // scene.add(cube)
 
-for (let i = 1; i <= count; i++) {
+// for (let i = 1; i <= count; i++) {
 
 
-    dummy.position.x = 10 * (Math.random() * 2 - 1)
-    dummy.position.y = 5 * (Math.random() * 2 - 1)
-    dummy.position.z = 3 * (Math.random() * 2 - 1)
+//     dummy.position.x = 10 * (Math.random() * 2 - 1)
+//     dummy.position.y = 5 * (Math.random() * 2 - 1)
+//     dummy.position.z = 3 * (Math.random() * 2 - 1)
 
-    dummy.rotation.x = Math.PI * (Math.random() * 2 - 1)
-    dummy.rotation.y = Math.PI * (Math.random() * 2 - 1)
-    dummy.rotation.z = Math.PI * (Math.random() * 2 - 1)
+//     dummy.rotation.x = Math.PI * (Math.random() * 2 - 1)
+//     dummy.rotation.y = Math.PI * (Math.random() * 2 - 1)
+//     dummy.rotation.z = Math.PI * (Math.random() * 2 - 1)
 
-    dummy.updateMatrix()
+//     dummy.updateMatrix()
 
-    instance.setMatrixAt(i, dummy.matrix)
-}
+//     instance.setMatrixAt(i, dummy.matrix)
+// }
 
 
 
