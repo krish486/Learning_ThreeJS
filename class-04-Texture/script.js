@@ -1,6 +1,7 @@
 import * as THREE from "three"
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import GUI from "lil-gui"
+import { HDRLoader } from 'three/addons/loaders/HDRLoader.js';
 
 const dimension = {
     height: window.innerHeight,
@@ -30,12 +31,13 @@ const texture = textureLoader.load("https://tse2.mm.bing.net/th/id/OIP.fAR_8u_ab
 // const material = new THREE.MeshStandardMaterial({
 //     map: texture
 // })
-const ambLight = new THREE.AmbientLight("white");
 
-const pntLight = new THREE.PointLight("white", 300)
-pntLight.position.set(8, 8, 8);
-scene.add(ambLight);
-scene.add(pntLight)
+/////////////////light///////////////////
+// const ambLight = new THREE.AmbientLight("white");
+// const pntLight = new THREE.PointLight("white", 300)
+// pntLight.position.set(8, 8, 8);
+// scene.add(ambLight);
+// scene.add(pntLight)
 
 // const cube = new THREE.Mesh(geometry, material)
 
@@ -58,10 +60,13 @@ const orbitControl = new OrbitControls(camera, renderer.domElement)
 
 const geometry = new THREE.BoxGeometry(1, 1, 1)
 const material = new THREE.MeshStandardMaterial({
-    map: texture
+    map: texture,
+    roughness: 0.1,
+    metalness: 0.9
 })
 const cube = new THREE.Mesh(geometry, material)
 positionFolder.add(cube.position, "x", -4, 4).name("x-move")
+scene.add(cube)
 
 // const count = 100
 
@@ -89,6 +94,12 @@ positionFolder.add(cube.position, "x", -4, 4).name("x-move")
 //     instance.setMatrixAt(i, dummy.matrix)
 // }
 
+
+const loader = new HDRLoader();
+const envMap = await loader.loadAsync('/env_map.hdr');
+envMap.mapping = THREE.EquirectangularReflectionMapping;
+scene.environment = envMap;
+scene.background = envMap
 
 
 window.addEventListener("resize", () => {
