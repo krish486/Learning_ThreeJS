@@ -2,6 +2,10 @@ import * as THREE from "three"
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import GUI from "lil-gui"
 import { HDRLoader } from 'three/addons/loaders/HDRLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+
+let clock = new THREE.Clock()
 
 const dimension = {
     height: window.innerHeight,
@@ -64,9 +68,9 @@ const material = new THREE.MeshStandardMaterial({
     roughness: 0.1,
     metalness: 0.9
 })
-const cube = new THREE.Mesh(geometry, material)
-positionFolder.add(cube.position, "x", -4, 4).name("x-move")
-scene.add(cube)
+// const cube = new THREE.Mesh(geometry, material)
+// positionFolder.add(cube.position, "x", -4, 4).name("x-move")
+// scene.add(cube)
 
 // const count = 100
 
@@ -94,12 +98,34 @@ scene.add(cube)
 //     instance.setMatrixAt(i, dummy.matrix)
 // }
 
-
+////////////////////HDRI loader
 const loader = new HDRLoader();
 const envMap = await loader.loadAsync('/env_map.hdr');
 envMap.mapping = THREE.EquirectangularReflectionMapping;
 scene.environment = envMap;
-scene.background = envMap
+// scene.background = envMap
+
+
+/////////////////////GLTF loader///////////////////////////
+let mixer;
+const gltfLoader = new GLTFLoader();
+gltfLoader.load("/Soldier.glb", (gltf) => {
+
+    const model = gltf.scene
+
+    mixer = new THREE.AnimationMixer(model)
+    console.log(gltf)
+
+    const animation = gltf.animations[0]
+
+    const action = mixer.clipAction(animation);
+
+    action.play()
+
+    model.position.y = -1
+
+    scene.add(model)
+})
 
 
 window.addEventListener("resize", () => {
@@ -117,6 +143,12 @@ orbitControl.update()
 const animate = () => {
     // cube.rotation.y += 0.01;
     // cube.rotation.z += 0.01;
+    let delta = clock.getDelta()
+
+    if (mixer) {
+        mixer.update(delta * 1)
+    }
+
     orbitControl.update()
     renderer.render(scene, camera)
     requestAnimationFrame(animate)
