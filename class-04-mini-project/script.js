@@ -21,8 +21,9 @@ const scene = new THREE.Scene()
 
 const camera = new THREE.PerspectiveCamera(75, dimension.width / dimension.height, 0.1, 100)
 camera.position.z = 5
-
-
+camera.position.x=-3
+camera.position.y=-0.2
+camera.lookAt(new THREE.Vector3(0,0,0))
 
 renderer.setSize(dimension.width, dimension.height)
 
