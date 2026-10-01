@@ -1,16 +1,23 @@
+import gsap from "gsap";
 import * as THREE from "three"
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { HDRLoader } from 'three/addons/loaders/HDRLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
-
 const timer = new THREE.Timer();
+
+const heading = document.querySelector(".heading h1");
+
+gsap.set(heading, {
+    opacity: 0
+});
 
 const dimension = {
     height: window.innerHeight,
     width: window.innerWidth
 }
 let canvas = document.querySelector("#webgl")
+// let heading = document.querySelector(".heading h1")
 
 const renderer = new THREE.WebGLRenderer({
     canvas,
@@ -20,10 +27,10 @@ const renderer = new THREE.WebGLRenderer({
 const scene = new THREE.Scene()
 
 const camera = new THREE.PerspectiveCamera(75, dimension.width / dimension.height, 0.1, 100)
-camera.position.z =3
-camera.position.x=-3.5
-camera.position.y=-0.2
-camera.lookAt(new THREE.Vector3(0,0,0))
+camera.position.z = 4
+camera.position.x = -2
+camera.position.y = -0.2
+camera.lookAt(new THREE.Vector3(0, 0, 0))
 
 renderer.setSize(dimension.width, dimension.height)
 
@@ -45,21 +52,44 @@ let mixer;
 const gltfLoader = new GLTFLoader();
 gltfLoader.load("/Soldier.glb", (gltf) => {
 
-    const model = gltf.scene
+    const model = gltf.scene;
 
-    mixer = new THREE.AnimationMixer(model)
-    console.log(gltf)
+    mixer = new THREE.AnimationMixer(model);
 
-    const animation = gltf.animations[0]
-
+    const animation = gltf.animations[12];
     const action = mixer.clipAction(animation);
 
-    action.play()
+    action.play();
 
-    model.position.y = -2
+    model.position.y = -2;
 
-    scene.add(model)
-})
+    scene.add(model);
+
+    const intro = gsap.timeline();
+
+    intro
+        .to(heading, {
+            opacity: 1,
+            duration: 0.5,
+            ease: "power2.out"
+        })
+        .from(heading, {
+            y: 500,
+            duration: 1.5,
+            ease: "power2.out"
+        })
+    gsap.timeline().from(model.position, {
+        y: 300,
+        duration: 1.7,
+        ease: "power3.out"
+    }, "-=0.5")
+        .from(model.rotation, {
+            y: -20,
+            duration: 1.2,
+            ease: "power2.out"
+        }, "<");
+
+});
 
 
 ///making a flat surface
