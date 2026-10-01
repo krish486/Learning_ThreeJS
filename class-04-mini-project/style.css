@@ -5,5 +5,35 @@
 }
 
 body {
+    height: 100vh;
+    width: 100vw;
     background-color: #B0702C;
+}
+
+#webgl {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+}
+
+.content {
+    height: 100%;
+    width: 100%;
+}
+
+.heading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: top;
+    justify-content: center;
+}
+
+.heading h1 {
+    font-family: "Silkscreen", sans-serif;
+    font-weight: 700;
+    font-size: 14rem;
+    letter-spacing:-0.5rem;
+    word-spacing: 1rem  ;
 }
