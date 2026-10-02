@@ -31,9 +31,24 @@ const renderer = new THREE.WebGLRenderer({
 const scene = new THREE.Scene()
 
 const camera = new THREE.PerspectiveCamera(75, dimension.width / dimension.height, 0.1, 100)
-camera.position.z = 5
-camera.position.x = -4
-camera.position.y = -0.2
+
+const changeCameraPosition = (x, y, z) => {
+
+    gsap.to(camera.position, {
+        x,
+        y,
+        z,
+        duration: 2,
+        ease: "power3.inOut",
+        onUpdate: () => {
+            camera.lookAt(0, 0, 0);
+        }
+    });
+
+};
+
+changeCameraPosition(-5, -0.2, 8);
+
 camera.lookAt(new THREE.Vector3(0, 0, 0))
 
 renderer.setSize(dimension.width, dimension.height)
@@ -54,21 +69,32 @@ scene.environment = envMap;
 /////////////////////GLTF loader///////////////////////////
 let mixer;
 const gltfLoader = new GLTFLoader();
-gltfLoader.load("/Soldier.glb", (gltf) => {
+let model;
 
-    const model = gltf.scene;
+const createGltfModel = (gltf) => {
+    model = gltf.scene;
 
     mixer = new THREE.AnimationMixer(model);
-
-    const animation = gltf.animations[12];
-    const action = mixer.clipAction(animation);
-
-    action.play();
 
     model.position.y = -2;
 
     scene.add(model);
+}
 
+let gltfActionFunction = (gltf, act = 2) => {
+
+    const animation = gltf.animations[act];
+    // console.log(gltf)
+    const action = mixer.clipAction(animation);
+
+    action.play();
+
+}
+
+
+gltfLoader.load("/Soldier.glb", (gltf) => {
+    createGltfModel(gltf)
+    gltfActionFunction(gltf)
     const intro = gsap.timeline();
 
     intro
@@ -102,7 +128,6 @@ gltfLoader.load("/Soldier.glb", (gltf) => {
         duration: 1.7,
         ease: "power1.out"
     })
-
 });
 
 
@@ -144,3 +169,27 @@ const animate = () => {
     requestAnimationFrame(animate)
 }
 animate()
+
+
+//////////animation on click 
+
+
+
+const startButton = document.querySelector(".Start-btn button")
+Start_btn.addEventListener("click", () => {
+
+    Start_btn.style.pointerEvents = "none";
+
+    startButton.style.backgroundColor = "#8a765f";
+    startButton.style.color = "#4a4035";
+    startButton.style.borderColor = "#4a4035";
+    startButton.style.boxShadow = "4px 4px 0 #4a4035";
+
+    Start_btn.style.opacity=0
+
+    changeCameraPosition(0,0,6);
+
+    gltfLoader.load("/Soldier.glb", (gltf) => {
+        gltfActionFunction(gltf, 12)
+    });
+});
