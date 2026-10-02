@@ -7,8 +7,12 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 const timer = new THREE.Timer();
 
 const heading = document.querySelector(".heading h1");
+const Start_btn = document.querySelector(".Start-btn");
 
 gsap.set(heading, {
+    opacity: 0
+});
+gsap.set(Start_btn, {
     opacity: 0
 });
 
@@ -27,8 +31,8 @@ const renderer = new THREE.WebGLRenderer({
 const scene = new THREE.Scene()
 
 const camera = new THREE.PerspectiveCamera(75, dimension.width / dimension.height, 0.1, 100)
-camera.position.z = 4
-camera.position.x = -2
+camera.position.z = 5
+camera.position.x = -4
 camera.position.y = -0.2
 camera.lookAt(new THREE.Vector3(0, 0, 0))
 
@@ -88,6 +92,16 @@ gltfLoader.load("/Soldier.glb", (gltf) => {
             duration: 1.2,
             ease: "power2.out"
         }, "<");
+
+    gsap.timeline().to(Start_btn, {
+        opacity: 1,
+        duration: 0.5,
+        ease: "power1.out"
+    }).from(Start_btn, {
+        x: 300,
+        duration: 1.7,
+        ease: "power1.out"
+    })
 
 });
 

@@ -1,39 +1,272 @@
 * {
-    margin: 0%;
-    padding: 0%;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
+html,
 body {
-    height: 100vh;
-    width: 100vw;
-    background-color: #B0702C;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
+
+body {
+    background: #B0702C;
+    font-family: "Silkscreen", sans-serif;
+}
+
+/* =========================
+   THREE.JS CANVAS
+========================= */
 
 #webgl {
-    height: 100%;
-    width: 100%;
     position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
     z-index: 100;
+    pointer-events: none;
 }
 
+
+/* =========================
+   CONTENT
+========================= */
+
 .content {
-    height: 100%;
+    position: relative;
+    z-index: 10;
+
     width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    /* pointer-events: none; */
 }
+
+
+/* =========================
+   HEADING
+========================= */
 
 .heading {
     width: 100%;
-    height: 100%;
+
     display: flex;
-    align-items: top;
     justify-content: center;
+    align-items: center;
+
+    padding-top: clamp(2rem, 6vh, 6rem);
+
+    text-align: center;
 }
 
 .heading h1 {
+    margin: 0;
+
     font-family: "Silkscreen", sans-serif;
     font-weight: 700;
-    font-size: 14rem;
-    letter-spacing:-0.5rem;
-    word-spacing: 1rem  ;
+
+    /*
+        Responsive automatically:
+        mobile  -> ~3rem
+        desktop -> can reach ~14rem
+    */
+    font-size: clamp(6rem, 13vw, 14rem);
+
+    line-height: 0.9;
+
+    letter-spacing: clamp(-0.25rem, -0.5vw, -0.5rem);
+
+    word-spacing: clamp(0rem, 1vw, 1rem);
+
+    white-space: nowrap;
+
+    color: #17120d;
+
+    text-shadow:
+        4px 4px 0 rgba(255, 255, 255, 0.12);
+}
+
+
+/* =========================
+   START BUTTON
+========================= */
+
+.Start-btn {
+    margin-top: clamp(1rem, 3vh, 3rem);
+
+    pointer-events: auto;
+
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+
+    position: fixed;
+    right: 1%;
+    top: 40%;
+}
+
+.Start-btn button {
+    position: relative;
+
+    min-width: clamp(140px, 18vw, 220px);
+    height: clamp(50px, 6vw, 70px);
+
+    padding: 0 2rem;
+
+    border: 2px solid #17120d;
+    border-radius: 4px;
+
+    background: #e7c98d;
+
+    color: #17120d;
+
+    font-family: "Silkscreen", sans-serif;
+    font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    box-shadow:
+        6px 6px 0 #17120d;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+/* little mechanical corner details */
+
+.Start-btn button::before,
+.Start-btn button::after {
+    content: "";
+
+    position: absolute;
+
+    width: 7px;
+    height: 7px;
+
+    background: #17120d;
+}
+
+.Start-btn button::before {
+    top: 6px;
+    left: 6px;
+}
+
+.Start-btn button::after {
+    bottom: 6px;
+    right: 6px;
+}
+
+
+/* =========================
+   BUTTON HOVER
+========================= */
+
+.Start-btn button:hover {
+    background: #f1dca9;
+
+    transform: translate(3px, 3px);
+
+    box-shadow:
+        3px 3px 0 #17120d;
+}
+
+
+/* =========================
+   BUTTON CLICK
+========================= */
+
+.Start-btn button:active {
+    transform: translate(6px, 6px);
+
+    box-shadow:
+        0 0 0 #17120d;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 768px) {
+
+    .heading {
+        padding-top: 8vh;
+    }
+
+    .heading h1 {
+        font-size: clamp(3rem, 13vw, 7rem);
+    }
+
+    .Start-btn {
+        margin-top: 2rem;
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    .heading {
+        padding-top: 7vh;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .heading h1 {
+        font-size: clamp(2.5rem, 15vw, 4.5rem);
+
+        letter-spacing: -0.2rem;
+
+        white-space: normal;
+    }
+
+    .Start-btn {
+        margin-top: 2rem;
+    }
+
+    .Start-btn button {
+        min-width: 150px;
+        height: 52px;
+
+        padding: 0 1.5rem;
+
+        font-size: 0.75rem;
+
+        box-shadow:
+            5px 5px 0 #17120d;
+    }
+}
+
+
+/* =========================
+   VERY SMALL PHONES
+========================= */
+
+@media (max-width: 350px) {
+
+    .heading h1 {
+        font-size: 2.3rem;
+    }
+
+    .Start-btn button {
+        min-width: 135px;
+    }
 }
