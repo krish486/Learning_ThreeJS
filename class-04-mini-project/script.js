@@ -8,12 +8,17 @@ const timer = new THREE.Timer();
 
 const heading = document.querySelector(".heading h1");
 const Start_btn = document.querySelector(".Start-btn");
+const Run_btn = document.querySelector(".Run-btn")
 
 gsap.set(heading, {
     opacity: 0
 });
 gsap.set(Start_btn, {
     opacity: 0
+});
+gsap.set(Run_btn, {
+    opacity: 0,
+    zIndex: -1,
 });
 
 const dimension = {
@@ -185,11 +190,31 @@ Start_btn.addEventListener("click", () => {
     startButton.style.borderColor = "#4a4035";
     startButton.style.boxShadow = "4px 4px 0 #4a4035";
 
-    Start_btn.style.opacity=0
+    Start_btn.style.opacity = 0
 
-    changeCameraPosition(0,0,6);
+    changeCameraPosition(0, 0, 6);
 
     gltfLoader.load("/Soldier.glb", (gltf) => {
         gltfActionFunction(gltf, 12)
     });
+
+    gsap.to(Run_btn, {
+        opacity: 1,
+        zIndex: 10
+    })
 });
+
+Run_btn.addEventListener("click", () => {
+    Run_btn.style.pointerEvents = "none";
+
+    Run_btn.style.backgroundColor = "#8a765f";
+    Run_btn.style.color = "#4a4035";
+    Run_btn.style.borderColor = "#4a4035";
+    Run_btn.style.boxShadow = "4px 4px 0 #4a4035";
+    changeCameraPosition(-4, 2, -7)
+    setTimeout(() => {
+        gltfLoader.load("/Soldier.glb", (gltf) => {
+            gltfActionFunction(gltf, 6)
+        })
+    }, 2000);
+})

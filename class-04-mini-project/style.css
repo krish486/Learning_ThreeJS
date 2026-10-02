@@ -99,7 +99,7 @@ body {
    START BUTTON
 ========================= */
 
-.Start-btn {
+.btn-cover {
     margin-top: clamp(1rem, 3vh, 3rem);
 
     pointer-events: auto;
@@ -113,7 +113,7 @@ body {
     top: 40%;
 }
 
-.Start-btn button {
+.btn-cover button {
     position: relative;
 
     min-width: clamp(140px, 18vw, 220px);
@@ -149,8 +149,8 @@ body {
 
 /* little mechanical corner details */
 
-.Start-btn button::before,
-.Start-btn button::after {
+.btn-cover button::before,
+.btn-cover button::after {
     content: "";
 
     position: absolute;
@@ -161,12 +161,12 @@ body {
     background: #17120d;
 }
 
-.Start-btn button::before {
+.btn-cover button::before {
     top: 6px;
     left: 6px;
 }
 
-.Start-btn button::after {
+.btn-cover button::after {
     bottom: 6px;
     right: 6px;
 }
@@ -176,7 +176,7 @@ body {
    BUTTON HOVER
 ========================= */
 
-.Start-btn button:hover {
+.btn-cover button:hover {
     background: #f1dca9;
 
     transform: translate(3px, 3px);
@@ -190,7 +190,7 @@ body {
    BUTTON CLICK
 ========================= */
 
-.Start-btn button:active {
+.btn-cover button:active {
     transform: translate(6px, 6px);
 
     box-shadow:
@@ -212,7 +212,7 @@ body {
         font-size: clamp(3rem, 13vw, 7rem);
     }
 
-    .Start-btn {
+    .btn-cover {
         margin-top: 2rem;
     }
 }
@@ -238,11 +238,11 @@ body {
         white-space: normal;
     }
 
-    .Start-btn {
-        margin-top: 2rem;
+    .btn-cover {
+        margin-top: 1rem;
     }
 
-    .Start-btn button {
+    .btn-cover button {
         min-width: 150px;
         height: 52px;
 
@@ -266,7 +266,7 @@ body {
         font-size: 2.3rem;
     }
 
-    .Start-btn button {
+    .btn-cover button {
         min-width: 135px;
     }
 }
